@@ -53,7 +53,7 @@
     function pasteClipboard() {
       const clipboardData = navigator.clipboard.readText();
       clipboardData.then(function (clipboardText) {
-        document.getElementById('curlCommand').value = clipboardText;
+        editor.setValue(clipboardText);
       });
     }
 
