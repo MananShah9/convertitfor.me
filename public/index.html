@@ -78,6 +78,9 @@
     }
 
     function convertCurlForWindowsExperimental(curlCommand) {
+      //Escape existing " characters with \"
+      curlCommand = curlCommand.replace(/"/g, '\\"');
+
       // Replace single quotes with double quotes
       curlCommand = curlCommand.replace(/'/g, '"');
 
@@ -107,14 +110,16 @@
         curlCommand = curlCommand.slice(0, -1);
       }
 
-      
+
 
       return curlCommand;
     }
 
     function convertCurlForWindows(curlCommand) {
+      //Escape existing " characters with \"
+      curlCommand = curlCommand.replace(/"/g, '\\"');
       curlCommand = curlCommand.replace(/'/g, '"');
-      
+
       // replace \newlines with spaces
       curlCommand = curlCommand.replace(/\\\n/g, ' ');
 
