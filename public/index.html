@@ -78,6 +78,12 @@
     }
 
     function convertCurlForWindowsExperimental(curlCommand) {
+      // replace \newlines with spaces
+      curlCommand = curlCommand.replace(/\\\n/g, ' ');
+
+      // Replace newlines with spaces
+      curlCommand = curlCommand.replace(/\n/g, ' ');
+
       //Escape existing " characters with \"
       curlCommand = curlCommand.replace(/"/g, '\\"');
 
@@ -85,30 +91,25 @@
       curlCommand = curlCommand.replace(/'/g, '"');
 
       // Escape double quotes inside double quotes
-      curlCommand = curlCommand.replace(/\\\"/g, '\\\\"');
+      //curlCommand = curlCommand.replace(/\\\"/g, '\\\\"');
 
       // Escape percent signs
       curlCommand = curlCommand.replace(/%/g, '%%');
 
-      // replace \newlines with spaces
-      curlCommand = curlCommand.replace(/\\\n/g, ' ');
-
-      // Replace newlines with spaces
-      curlCommand = curlCommand.replace(/\n/g, ' ');
 
 
       // Replace multiple spaces with single space
       curlCommand = curlCommand.replace(/\s+/g, ' ');
 
       // remove spaces afer ^
-      curlCommand = curlCommand.replace(/\^ /g, '^');
+      //curlCommand = curlCommand.replace(/\^ /g, '^');
 
       // Replace multiple ^ with single ^
-      curlCommand = curlCommand.replace(/\^\^+/g, '^');
+      //curlCommand = curlCommand.replace(/\^\^+/g, '^');
 
-      if (curlCommand[curlCommand.length - 1] === '^') {
-        curlCommand = curlCommand.slice(0, -1);
-      }
+      //if (curlCommand[curlCommand.length - 1] === '^') {
+      //  curlCommand = curlCommand.slice(0, -1);
+      // }
 
 
 
