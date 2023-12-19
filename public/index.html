@@ -87,8 +87,12 @@
       // Escape percent signs
       curlCommand = curlCommand.replace(/%/g, '%%');
 
+      // replace \newlines with spaces
+      curlCommand = curlCommand.replace(/\\\n/g, ' ');
+
       // Replace newlines with spaces
       curlCommand = curlCommand.replace(/\n/g, ' ');
+
 
       // Replace multiple spaces with single space
       curlCommand = curlCommand.replace(/\s+/g, ' ');
@@ -110,6 +114,9 @@
 
     function convertCurlForWindows(curlCommand) {
       curlCommand = curlCommand.replace(/'/g, '"');
+      
+      // replace \newlines with spaces
+      curlCommand = curlCommand.replace(/\\\n/g, ' ');
 
       curlCommand = curlCommand.replace(/\\"/g, '\\"^');
 
