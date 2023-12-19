@@ -67,9 +67,9 @@
         // check if experimental mode is on
         const experimentalModeToggle = document.getElementById('experimentalModeToggle');
         if (experimentalModeToggle.checked) {
-          var windowsCommand = convertCurlForWindowsExperimental(editor.getValue());
+          var windowsCommand = convertToWindowsCmd(editor.getValue());
         } else {
-          var windowsCommand = convertCurlForWindows(editor.getValue());
+          var windowsCommand = convertToWindowsCmd(editor.getValue());
         }
         document.getElementById('windowsCommand').value = windowsCommand;
       } catch (error) {
@@ -77,71 +77,21 @@
       }
     }
 
-    function convertCurlForWindowsExperimental(curlCommand) {
-      // replace \newlines with spaces
-      curlCommand = curlCommand.replace(/\\\n/g, ' ');
-
-      // Replace newlines with spaces
-      curlCommand = curlCommand.replace(/\n/g, ' ');
-
-      //Escape existing " characters with \"
-      curlCommand = curlCommand.replace(/"/g, '\\"');
-
-      // Replace single quotes with double quotes
-      curlCommand = curlCommand.replace(/'/g, '"');
-
-      // Escape double quotes inside double quotes
-      //curlCommand = curlCommand.replace(/\\\"/g, '\\\\"');
-
-      // Escape percent signs
-      curlCommand = curlCommand.replace(/%/g, '%%');
-
-
-
-      // Replace multiple spaces with single space
-      curlCommand = curlCommand.replace(/\s+/g, ' ');
-
-      // remove spaces afer ^
-      //curlCommand = curlCommand.replace(/\^ /g, '^');
-
-      // Replace multiple ^ with single ^
-      //curlCommand = curlCommand.replace(/\^\^+/g, '^');
-
-      //if (curlCommand[curlCommand.length - 1] === '^') {
-      //  curlCommand = curlCommand.slice(0, -1);
-      // }
-
-
-
-      return curlCommand;
-    }
-
-    function convertCurlForWindows(curlCommand) {
-      //Escape existing " characters with \"
-      curlCommand = curlCommand.replace(/"/g, '\\"');
-      curlCommand = curlCommand.replace(/'/g, '"');
-
-      // replace \newlines with spaces
-      curlCommand = curlCommand.replace(/\\\n/g, ' ');
-
-      curlCommand = curlCommand.replace(/\\"/g, '\\"^');
-
-      curlCommand = curlCommand.replace(/\\/g, '\\^');
-
-      // curlCommand = curlCommand.replace(/\n/g, '^');
-
-      curlCommand = curlCommand.replace(/\s+/g, ' ');
-
-      curlCommand = curlCommand.replace(/\^\^+/g, '^');
-
-      curlCommand = curlCommand.replace(/\/\^/g, '^');
-
-      if (curlCommand[curlCommand.length - 1] === '^') {
-        curlCommand = curlCommand.slice(0, -1);
-      }
-
-
-      return curlCommand;
+    function convertToWindowsCmd(cmd) {
+      // split the command by spaces
+      const cmdArr = cmd.split(" ");
+      // get the index of the json data
+      const jsonIndex = cmdArr.findIndex((item) => item.includes("{"));
+      // get the json data
+      const jsonData = cmdArr[jsonIndex];
+      // remove the json data from the array
+      cmdArr.splice(jsonIndex, 1);
+      // join the array with spaces
+      const cmdStr = cmdArr.join(" ");
+      // replace the double quotes with backslash double quotes
+      const newJsonData = jsonData.replace(/"/g, '\\"');
+      // return the new command
+      return `${cmdStr} "${newJsonData}"`;
     }
 
     function copyToClipboard() {
