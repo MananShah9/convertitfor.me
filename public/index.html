@@ -79,7 +79,7 @@
 
     function convertToWindowsCmd(curlCommand) {
       // Remove backslashes
-      let cmdCommand = curlCommand.replace(/\\/g, '');
+      let cmdCommand = curlCommand.replace(/\\/g, '^');
 
       // Change single quotes to double quotes
       cmdCommand = cmdCommand.replace(/'/g, '"');
@@ -98,7 +98,7 @@
 
     function convertToWindowsCmdExperimental(curlCommand) {
       // Remove backslashes
-      let cmdCommand = curlCommand.replace(/\\/g, '');
+      let cmdCommand = curlCommand.replace(/\\/g, '^');
 
       // Change single quotes to double quotes
       cmdCommand = cmdCommand.replace(/'/g, '"');
