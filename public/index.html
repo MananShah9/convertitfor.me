@@ -67,7 +67,7 @@
         // check if experimental mode is on
         const experimentalModeToggle = document.getElementById('experimentalModeToggle');
         if (experimentalModeToggle.checked) {
-          var windowsCommand = convertToWindowsCmd(editor.getValue());
+          var windowsCommand = convertToWindowsCmdExperimental(editor.getValue());
         } else {
           var windowsCommand = convertToWindowsCmd(editor.getValue());
         }
@@ -104,11 +104,10 @@
       let cmdCommand = curlCommand.replace(/\\/g, '');
 
       // remove newlines
-      cmdCommand = cmdCommand.replace(/\r?\n|\r/g, '');
+      cmdCommand = cmdCommand.replace(/\r?\n|\r/g, ' ');
 
       // escape double quotes
       cmdCommand = cmdCommand.replace(/"/g, '\\"');
-      
       // Change single quotes to double quotes
       cmdCommand = cmdCommand.replace(/'/g, '"');
 
