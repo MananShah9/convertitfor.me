@@ -77,7 +77,7 @@
       }
     }
 
-    function convertToWindowsCmd(cmd) {  
+    function convertToWindowsCmd(curlCommand) {
       // Remove backslashes
       let cmdCommand = curlCommand.replace(/\\/g, '');
 
@@ -89,6 +89,28 @@
         const escapedQuotes = p1.replace(/"/g, '\\"');
         return `"${escapedQuotes}"`;
       });
+
+      // Remove line continuation backticks
+      cmdCommand = cmdCommand.replace(/\\\r?\n/g, '');
+
+      return cmdCommand;
+    }
+
+    function convertToWindowsCmdExperimental(curlCommand) {
+      // Remove backslashes
+      let cmdCommand = curlCommand.replace(/\\/g, '');
+
+      // Change single quotes to double quotes
+      cmdCommand = cmdCommand.replace(/'/g, '"');
+
+      // Escape double quotes within the data
+      cmdCommand = cmdCommand.replace(/"([^"]*)"/g, (match, p1) => {
+        const escapedQuotes = p1.replace(/"/g, '\\"');
+        return `"${escapedQuotes}"`;
+      });
+
+      // Handle special characters, e.g., hyphens in key names or values
+      cmdCommand = cmdCommand.replace(/(-[^ ]+)/g, '"$1"');
 
       // Remove line continuation backticks
       cmdCommand = cmdCommand.replace(/\\\r?\n/g, '');
