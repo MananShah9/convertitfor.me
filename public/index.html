@@ -46,7 +46,7 @@
     </div>
     <div class="mt-3">
       <div class="form-check form-switch">
-        <input class="form-check-input" type="checkbox" id="experimentalModeToggle">
+        <input class="form-check-input" type="checkbox" id="experimentalModeToggle" value="">
         <label class="form-check-label" for="experimentalModeToggle">Experimental Mode</label>
       </div>
     </div>
@@ -102,7 +102,7 @@
     function convertToWindowsCmdExperimental(curlCommand) {
       // Remove backslashes
       let cmdCommand = curlCommand.replace(/\\/g, '');
-      
+
       // remove newlines
       cmdCommand = cmdCommand.replace(/\r?\n|\r/g, '');
 
@@ -117,6 +117,7 @@
 
       // Handle special characters, e.g., hyphens in key names or values
       cmdCommand = cmdCommand.replace(/(-[^ ]+)/g, '"$1"');
+      cmdCommand = cmdCommand.replace(/(&[^ ]+)/g, '"$1"');
 
       // Remove line continuation backticks
       cmdCommand = cmdCommand.replace(/\\\r?\n/g, '');
