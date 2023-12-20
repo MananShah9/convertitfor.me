@@ -118,8 +118,8 @@
       });
 
       // Handle special characters, e.g., hyphens in key names or values
-      cmdCommand = cmdCommand.replace(/(-[^ ]+)/g, '\\$1');
-      cmdCommand = cmdCommand.replace(/(&[^ ]+)/g, '\\$1');
+      cmdCommand = cmdCommand.replace(/ (-[^ ]+)/g, ' \\$1');
+      cmdCommand = cmdCommand.replace(/ (&[^ ]+)/g, ' \\$1');
 
       // Remove line continuation backticks
       cmdCommand = cmdCommand.replace(/\\\r?\n/g, '');
