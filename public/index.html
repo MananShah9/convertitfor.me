@@ -77,21 +77,23 @@
       }
     }
 
-    function convertToWindowsCmd(cmd) {
-      // split the command by spaces
-      const cmdArr = cmd.split(" ");
-      // get the index of the json data
-      const jsonIndex = cmdArr.findIndex((item) => item.includes("{"));
-      // get the json data
-      const jsonData = cmdArr[jsonIndex];
-      // remove the json data from the array
-      cmdArr.splice(jsonIndex, 1);
-      // join the array with spaces
-      const cmdStr = cmdArr.join(" ");
-      // replace the double quotes with backslash double quotes
-      const newJsonData = jsonData.replace(/"/g, '\\"');
-      // return the new command
-      return `${cmdStr} "${newJsonData}"`;
+    function convertToWindowsCmd(cmd) {  
+      // Remove backslashes
+      let cmdCommand = curlCommand.replace(/\\/g, '');
+
+      // Change single quotes to double quotes
+      cmdCommand = cmdCommand.replace(/'/g, '"');
+
+      // Escape double quotes within the data
+      cmdCommand = cmdCommand.replace(/"([^"]*)"/g, (match, p1) => {
+        const escapedQuotes = p1.replace(/"/g, '\\"');
+        return `"${escapedQuotes}"`;
+      });
+
+      // Remove line continuation backticks
+      cmdCommand = cmdCommand.replace(/\\\r?\n/g, '');
+
+      return cmdCommand;
     }
 
     function copyToClipboard() {
